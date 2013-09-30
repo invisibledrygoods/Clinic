@@ -1,0 +1,12 @@
+{ 
+  "infect": "Clinic/Assets",
+  "with": {
+    "invisibledrygoods/WhiteBox": "HEAD",
+    "invisibledrygoods/Points": "HEAD",
+    "invisibledrygoods/GivenWhenUnity": "HEAD",
+    "invisibledrygoods/RequireUnity": "HEAD",
+    "invisibledrygoods/Select": "HEAD",
+    "invisibledrygoods/Circuitry": "HEAD",
+    "invisibledrygoods/GizmoTurtle": "HEAD"
+  }
+}
