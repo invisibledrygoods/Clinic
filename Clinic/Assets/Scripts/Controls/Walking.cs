@@ -64,6 +64,7 @@ public class Walking : CircuitComponent
         }
         else if (buttons.Released("B"))
         {
+            Debug.Log("sparking B");
             Spark(b);
         }
     }
