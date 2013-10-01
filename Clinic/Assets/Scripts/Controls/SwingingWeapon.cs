@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System;
 using Require;
 
-public class PickingUpWeapon : CircuitComponent
+public class SwingingWeapon : CircuitComponent
 {
     public List<CircuitComponent> next;
     public List<CircuitComponent> fail;
 
-    public float pickUpRadius = 1.0f;
-    public float giveAfterSeconds;
+    public float startAfterSeconds;
+    public float finishAfterSeconds;
     public float recoverAfterSeconds;
+    public Transform hitbox;
 
     Transform module;
+    Transform carriedWeapon;
     float secondsSinceEnabled;
-    Transform closestWeapon;
 
     void Awake()
     {
@@ -25,32 +26,32 @@ public class PickingUpWeapon : CircuitComponent
     {
         secondsSinceEnabled += Time.deltaTime;
 
+        // TODO: hitbox needs to have its stats changed to match weapon
+
         if (secondsSinceEnabled > recoverAfterSeconds)
         {
             Spark(next);
         }
-        else if (secondsSinceEnabled > giveAfterSeconds)
+        else if (secondsSinceEnabled > finishAfterSeconds)
         {
-            Debug.Log("closest weapon: " + closestWeapon.name);
-            closestWeapon.parent = module;
-            closestWeapon.localPosition = new Vector3(0, 2, 0);
+            hitbox.gameObject.SetActive(false);
+        }
+        else if (secondsSinceEnabled > startAfterSeconds)
+        {
+            hitbox.gameObject.SetActive(true);
         }
     }
 
     void OnEnable()
     {
         secondsSinceEnabled = 0.0f;
-        closestWeapon = null;
 
-        new Select(".IsAWeapon").Each<Transform>(t =>
+        foreach (IsAWeapon weapon in module.GetComponentsInChildren<IsAWeapon>())
         {
-            if (Vector3.Distance(module.position, t.position) < pickUpRadius)
-            {
-                closestWeapon = t;
-            }
-        });
+            carriedWeapon = weapon.transform;
+        }
 
-        if (closestWeapon == null)
+        if (carriedWeapon == null)
         {
             Spark(fail);
         }
