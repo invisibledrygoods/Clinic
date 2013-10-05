@@ -9,11 +9,7 @@ public class TeleportsActorWhenSteppedOn : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        HasCommandQueue commands = collider.transform.GetModuleRoot().GetComponent<HasCommandQueue>();
-        if (commands != null)
-        {
-            commands.Issue(new TeleportCommand(new Select("#Player")[0].transform, teleportTo, speed));
-        }
+        collider.transform.GetModuleRoot().Require<HasAMailbox>().Send("teleport to " + teleportTo);
     }
 
     void OnDrawGizmos()

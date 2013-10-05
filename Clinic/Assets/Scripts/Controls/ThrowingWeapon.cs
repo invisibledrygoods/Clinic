@@ -32,13 +32,16 @@ public class ThrowingWeapon : CircuitComponent
         }
         else if (secondsSinceEnabled > releaseAfterSeconds)
         {
+            carriedWeapon.localPosition = module.position + Vector3.up;
             carriedWeapon.transform.parent = null;
+            carriedWeapon.Require<HasAMailbox>().Send("you were thrown");
         }
     }
 
     void OnEnable()
     {
         secondsSinceEnabled = 0.0f;
+        carriedWeapon = null;
 
         foreach (IsAWeapon weapon in module.GetComponentsInChildren<IsAWeapon>())
         {

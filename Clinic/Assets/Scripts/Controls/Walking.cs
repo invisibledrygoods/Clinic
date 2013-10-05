@@ -6,13 +6,13 @@ public class Walking : CircuitComponent
 {
     public List<CircuitComponent> a;
     public List<CircuitComponent> b;
-    public List<CircuitComponent> runCommand;
+    public List<CircuitComponent> teleport;
 
     Transform module;
     FollowsTarget movement;
     UsesAxisInput axis;
     UsesButtonInput buttons;
-    HasCommandQueue commands;
+    HasAMailbox mailbox;
 
     void Awake()
     {
@@ -20,17 +20,11 @@ public class Walking : CircuitComponent
         movement = module.Require<FollowsTarget>();
         axis = module.Require<UsesAxisInput>();
         buttons = module.Require<UsesButtonInput>();
-        commands = module.Require<HasCommandQueue>();
+        mailbox = module.Require<HasAMailbox>();
     }
 
     void Update()
     {
-        if (commands.Exist())
-        {
-            Spark(runCommand);
-            return;
-        }
-
         movement.target = module.position;
 
         Vector3 right = -module.right;
@@ -64,9 +58,20 @@ public class Walking : CircuitComponent
         }
         else if (buttons.Released("B"))
         {
-            Debug.Log("sparking B");
             Spark(b);
         }
+
+        mailbox.On("teleport to (__, __, __)", _ =>
+        {
+            // TODO: maybe some central destination component that follows target and teleport both use?
+
+            foreach (Teleporting teleporting in module.GetComponentsInChildren<Teleporting>())
+            {
+                teleporting.to = new Vector3(_[0], _[1], _[2]);
+            }
+
+            Spark(teleport);
+        });
     }
 
     void OnDisable()

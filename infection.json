@@ -2,6 +2,7 @@
   "infect": "Clinic/Assets",
   "with": {
     "invisibledrygoods/WhiteBox": "HEAD",
+    "invisibledrygoods/PostOffice": "HEAD",
     "invisibledrygoods/Points": "HEAD",
     "invisibledrygoods/GivenWhenUnity": "HEAD",
     "invisibledrygoods/RequireUnity": "HEAD",

@@ -46,6 +46,8 @@ public class SwingingWeapon : CircuitComponent
     {
         secondsSinceEnabled = 0.0f;
 
+        carriedWeapon = null;
+
         foreach (IsAWeapon weapon in module.GetComponentsInChildren<IsAWeapon>())
         {
             carriedWeapon = weapon.transform;

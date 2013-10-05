@@ -40,7 +40,6 @@ public class Attacking : CircuitComponent
 
     public void OnEnable()
     {
-        Debug.Log("i was enabled");
         secondsSinceEnabled = 0;
     }
 
