@@ -61,7 +61,7 @@ public class Walking : CircuitComponent
             Spark(b);
         }
 
-        mailbox.On("teleport to (__, __, __)", _ =>
+        mailbox.Read("teleport to (__, __, __)", _ =>
         {
             // TODO: maybe some central destination component that follows target and teleport both use?
 

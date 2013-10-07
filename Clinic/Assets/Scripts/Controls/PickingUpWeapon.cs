@@ -31,7 +31,6 @@ public class PickingUpWeapon : CircuitComponent
         }
         else if (secondsSinceEnabled > giveAfterSeconds)
         {
-            Debug.Log("closest weapon: " + closestWeapon.name);
             closestWeapon.parent = module;
             closestWeapon.localPosition = new Vector3(0, 2, 0);
         }
