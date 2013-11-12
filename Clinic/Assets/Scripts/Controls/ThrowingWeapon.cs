@@ -30,9 +30,8 @@ public class ThrowingWeapon : CircuitComponent
         {
             Spark(next);
         }
-        else if (secondsSinceEnabled > releaseAfterSeconds)
+        else if (secondsSinceEnabled > releaseAfterSeconds && carriedWeapon.transform.parent == module)
         {
-            carriedWeapon.localPosition = module.position + Vector3.up;
             carriedWeapon.transform.parent = null;
             carriedWeapon.Require<HasAMailbox>().Send("you were thrown");
         }

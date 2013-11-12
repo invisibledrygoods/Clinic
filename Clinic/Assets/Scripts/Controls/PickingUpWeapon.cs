@@ -29,10 +29,11 @@ public class PickingUpWeapon : CircuitComponent
         {
             Spark(next);
         }
-        else if (secondsSinceEnabled > giveAfterSeconds)
+        else if (secondsSinceEnabled > giveAfterSeconds && closestWeapon.parent != module)
         {
             closestWeapon.parent = module;
             closestWeapon.localPosition = new Vector3(0, 2, 0);
+            closestWeapon.Require<HasAMailbox>().Send("you were picked up");
         }
     }
 
